@@ -1,0 +1,121 @@
+Installation of Nagios Server on Linux Machine:
+
+Step 1. Pre-requisite software:
+
+            sudo su
+
+            yum install httpd php -y      
+
+            yum install gcc glibc glibc-common -y
+
+            yum install gd gd-devel -y
+
+Step 2. Create user to run Nagios
+
+            adduser -m nagios
+
+            passwd nagios
+
+Step 3. Create group and add users into group
+
+            groupadd nagioscmd
+
+            usermod -a -G nagioscmd nagios
+
+            usermod -a -G nagioscmd apache
+
+Step 4. Download Nagios core and plugins on created directory
+
+            mkdir ~/downloads
+
+            cd ~/downloads
+
+            wget http://prdownloads.sourceforge.net/sourceforge/nagios/nagios-4.4.6.tar.gz
+
+            wget http://nagios-plugins.org/download/nagios-plugins-2.0.3.tar.gz
+
+Step 5. compile and installation
+
+            tar zxvf nagios-4.0.8.tar.gz
+
+            cd nagios-4.0.8
+
+Run configuration script in group 
+
+            ./configure --with-command-group=nagioscmd
+
+Compile source code
+
+            make all
+
+Step 6. Install binaries
+
+            make install
+
+            make install-init
+
+            make install-config
+
+            make install-commandmode
+
+Step 7. Configure web interface
+
+            make install-webconf
+
+Step 8. Create account for login
+
+            htpasswd -c /usr/local/nagios/etc/htpasswd.users nagiosadmin
+
+Give password and restart the service
+
+            service httpd restart
+
+Step 9. Compile and install plugins
+
+            cd ~/downloads
+
+            tar zxvf nagios-plugins-2.0.3.tar.gz
+
+            cd nagios-plugins-2.0.3
+
+Step 10. Compile and install plugins
+
+            ./configure --with-nagios-user=nagios --with-nagios-group=nagios
+
+            make
+
+            make install
+
+Step 11. nagios start 
+
+            chkconfig --add nagios     #optional
+            chkconfig nagios on
+
+Step 12. Verify sample Nagios configuration files 
+
+            /usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg
+
+Step 13. if no error then start the Nagios 
+
+            service nagios start
+
+            service httpd restart
+
+Step 14. For Nagios Dashboard
+
+            Mentioned on browser http://server_ip/nagios
+
+
+
+
+
+
+
+            Thanks & Regards,
+            Sachin 
+            (An aspiring DevOps engineer who is looking for opportunities in DevOps and Cloud. A quick learner with a passion for continuous integration, deployment, and improvement, aiming to contribute to efficient and scalable software delivery processes while gaining practical experience in industry best practices. )
+
+            E-Mail: 	Sachinraj1652@gmail.com  
+           LinkedIn: 	https://www.linkedin.com/in/sachin1652  
+           E-Mail: 	Sachinraj1652@gmail.com  
+
